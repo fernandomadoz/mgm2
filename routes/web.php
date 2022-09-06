@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/list/{gen_modelo}/{gen_opcion}', 'GenericController@index');
 	// FIN RUTAS GENERICAS
 
+	Route::post('change-password', 'HomeController@changePassword');
 
 });
 

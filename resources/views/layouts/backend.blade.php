@@ -204,9 +204,13 @@ else {
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 
-    <?php 
 
-    if(isset($mensaje) or $errors->any()) {
+    <?php
+    if(isset($mensaje) or Session::get('mensaje') <> '' or $errors->any()) {
+
+      if (Session::get('mensaje') <> '' and !isset($mensaje)) {
+        $mensaje = Session::get('mensaje');
+      }
 
       $mensaje_class = 'alert-success';
       $mensaje_icon = 'fa-check';
@@ -218,7 +222,7 @@ else {
           $mensaje_class = 'alert-warning';
           foreach ($errors->all() as $error) {
             $mensaje_detalle .= "<p>$error</p>";
-          }          
+          }
         }
         else {
           $errors_array = $errors->all();
@@ -234,26 +238,26 @@ else {
           $mensaje_detalle = $mensaje['detalle'];
         }
         else {
-          $mensaje_detalle = $mensaje;  
+          $mensaje_detalle = $mensaje;
         }
 
         if (isset($mensaje['error']) and $mensaje['error']) {
           $mensaje_icon = 'fa fa-ban';
-        }        
+        }
       }
 
     ?>
       <section class="content-header">
-        <div class="row">    
+        <div class="row">
           <div class="col-xs-12">
             <br>
             <div class="alert <?php echo $mensaje_class; ?> alert-dismissible">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-              <h4><i class="icon fa <?php echo $mensaje_icon; ?>"></i> <?php echo $mensaje_detalle; ?></h4>  
+              <h4><i class="icon fa <?php echo $mensaje_icon; ?>"></i> <?php echo $mensaje_detalle; ?></h4>
             </div>
-          </div>   
+          </div>
         </div>
-      </section> 
+      </section>
     <?php } ?>
 
     @yield('contenido')
